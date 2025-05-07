@@ -1,103 +1,120 @@
-import Image from "next/image";
+import Link from 'next/link'
+import { Typography } from '@mui/material'
+import { Dot } from 'lucide-react'
 
-export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+import { news } from '@/data/news'
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+export default function HomePage() {
+    return (
+        <main className='flex flex-col justify-center items-center p-[20px] bg-[#0D2B43]'>
+            <Typography
+                className='text-[#67D5EB] text-center'
+                variant='h2'
+                fontWeight='bold'>
+                NEWS
+            </Typography>
+            <div className='grid grid-cols-[2fr_1fr] gap-[40px] pt-[20px] w-full'>
+                <div className='bg-[#3A6A8E]/50 p-[40px]'>
+                    <Typography
+                        className='text-[#FFFFFF] text-left'
+                        variant='h4'
+                        fontWeight='bold'>
+                        НОВОСТИ
+                    </Typography>
+                    <div className='pt-[40px]'>
+                        <ul className='space-y-[40px]'>
+                            {news.map((n) => (
+                                <li key={n.id}>
+                                    <div className='flex justify-between'>
+                                        <div className='flex flex-col'>
+                                            <Link href={`/news/${n.id}`}>
+                                                <Typography
+                                                    className='hover:underline text-[#67D5EB]'
+                                                    variant='h5'
+                                                    fontWeight='bold'>
+                                                    {n.text.length > 50 ? `${n.text.slice(0, 50)}...` : n.text}
+                                                </Typography>
+                                            </Link>
+                                            <Typography
+                                                className='flex items-center text-[#88959D] text-left'
+                                                variant='body1'>
+                                                {new Date(n.date * 1000).toLocaleDateString('ru-RU')}
+                                                <Dot
+                                                    color='#528FB4'
+                                                    size={50} />
+                                                {n.type}
+                                            </Typography>
+                                        </div>
+                                        <img
+                                            src={n.attachments?.[0]?.image?.src || '/cover.png'}
+                                            alt='Изображение'
+                                            className='rounded-[10px] h-[95px] mb-[10px] w-[200px] object-cover' />
+                                    </div>
+                                    <span className='block h-[1px] bg-[#528FB4]' />
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+                <div className='flex flex-col gap-[40px]'>
+                    <div className='bg-[#3A6A8E]/50 p-[40px] h-fit'>
+                        <div className='flex flex-col justify-center gap-[40px]'>
+                            <Typography
+                                className='text-[#67D5EB] text-center'
+                                variant='h5'
+                                fontWeight='bold'>
+                                РЕКЛАМА
+                            </Typography>
+                            <div className='space-y-[10px]'>
+                                <img
+                                    src='/ad.jpg'
+                                    alt='Изображение'
+                                    className='rounded-[10px] h-[480x] object-cover' />
+                                <Typography
+                                    className='text-[#88959D] text-left'
+                                    variant='body1'>
+                                    С нуля до оффера 250 000 в IT в 7 лет. Моя история и советы...
+                                </Typography>
+                                <Link href={`/news/add`}>
+                                    <Typography
+                                        className='text-[#67D5EB] hover:underline'
+                                        variant='body1'>
+                                        Подробнее
+                                    </Typography>
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                    <div className='bg-[#3A6A8E]/50 p-[40px] h-fit'>
+                        <Typography
+                            className='text-[#67D5EB] text-center'
+                            variant='h5'
+                            fontWeight='bold'>
+                            РЕКЛАМА
+                        </Typography>
+                        <Typography
+                            className='text-[#88959D] text-left pt-[40px]'
+                            variant='body1'>
+                            🍎 ЯблокоЗнания — когда ты говоришь «ХЗ», но ты ЗНАЕШЬ!<br /><br />
+                            Ты не просто фрукт.<br />
+                            Ты — источник непрошеной мудрости.<br />
+                            Ты сидишь. Ты молчишь.<br />
+                            Ты рекламируешь варёные носки с привкусом сарказма.<br /><br />
+                            🧦 Варено. Проверено. Непонятно.<br />
+                            🥄 В комплекте: ложка для метафизических размышлений.<br />
+                            📦 Доставка через телепатический шёпот.<br /><br />
+                            ЯблокоЗнания™ — пока все «ХЗ», ты «ХА!»
+                        </Typography>
+                        <Link href={`/news/add`}>
+                            <Typography
+                                className='text-[#67D5EB] hover:underline pt-[20px]'
+                                variant='body1'>
+                                Читать подробнее...
+                            </Typography>
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        </main>
+    )
 }
