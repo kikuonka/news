@@ -1,4 +1,4 @@
-import { getNewsById, news } from '@/data/news'
+import { getNewsById } from '@/data/news'
 import Tag from '@/src/app/component/Tag'
 import Button from '@/src/app/component/Button'
 
