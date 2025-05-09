@@ -3,6 +3,7 @@ import { Typography } from '@mui/material'
 import { Dot } from 'lucide-react'
 
 import { news } from '@/data/news'
+import Button from './component/Button'
 
 export default function HomePage() {
     return (
@@ -75,13 +76,7 @@ export default function HomePage() {
                                     variant='body1'>
                                     С нуля до оффера 250 000 в IT в 7 лет. Моя история и советы...
                                 </Typography>
-                                <Link href={`/news/add`}>
-                                    <Typography
-                                        className='text-[#67D5EB] hover:underline'
-                                        variant='body1'>
-                                        Подробнее
-                                    </Typography>
-                                </Link>
+                                <Button isError={true} />
                             </div>
                         </div>
                     </div>
@@ -105,13 +100,7 @@ export default function HomePage() {
                             📦 Доставка через телепатический шёпот.<br /><br />
                             ЯблокоЗнания™ — пока все «ХЗ», ты «ХА!»
                         </Typography>
-                        <Link href={`/news/add`}>
-                            <Typography
-                                className='text-[#67D5EB] hover:underline pt-[20px]'
-                                variant='body1'>
-                                Читать подробнее...
-                            </Typography>
-                        </Link>
+                        <Button isError={true} />
                     </div>
                 </div>
             </div>
