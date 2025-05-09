@@ -5,11 +5,7 @@ import Button from '@/src/app/component/Button'
 import { notFound } from 'next/navigation'
 import { Typography } from '@mui/material'
 
-export async function generateStaticParams() {
-    return news.map((n) => ({ id: n.id.toString() }))
-}
-
-export const dynamicParams = false
+export const dynamic = 'force-dynamic'
 
 export default async function NewsPage({ params }: { params: { id: string } }) {
     await new Promise((resolve) => setTimeout(resolve, 2000));
